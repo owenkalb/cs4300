@@ -1,3 +1,6 @@
+import pytest
+import task5
+
 def test_first_three_books():
     expected = [
         ("Red Rising", "Pierce Brown"),
@@ -8,5 +11,5 @@ def test_first_three_books():
 
     def test_get_student_info_valid():
     # Lookup should return correct ID for valid names
-    assert task5.get_student_info("John") == "101"
-    assert task5.get_student_info("Jill") == "103"
+        assert task5.get_student_info("John") == "101"
+        assert task5.get_student_info("Jill") == "103"
