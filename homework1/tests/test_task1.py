@@ -1,7 +1,7 @@
 # task1
-from task1 import say_hello
+from task1 import task_1
 
 def test_say_hello(capsys):
-    say_hello()
+    task_1()
     captured = capsys.readouterr()
     assert captured.out.strip() == "Hello World"
