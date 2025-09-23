@@ -1,13 +1,14 @@
-# test_task2.py
+# Task2 test
 import pytest
 import task2
 
+#Test that each variable in task2 has the expected type
 def test_variable_types():
-    #Test that each variable in task2 has the expected type
     assert isinstance(task2.a, int), "a should be an int"
     assert isinstance(task2.b, float), "b should be a float"
     assert isinstance(task2.c, str), "c should be a string"
     assert isinstance(task2.d, bool), "d should be a bool"
+
 
 def test_variable_values():
     assert task2.a == 10

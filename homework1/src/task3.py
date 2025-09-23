@@ -24,6 +24,7 @@ def is_prime(n):
 
 def first_10_primes():
     primes = []
+    # Set 1st prime num
     num = 2
     while len(primes) < 10:
         if is_prime(num):

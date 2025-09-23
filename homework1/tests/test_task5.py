@@ -1,6 +1,7 @@
 import pytest
 import task5
 
+# Check if 1-3 books are correct
 def test_first_three_books():
     expected = [
         ("Red Rising", "Pierce Brown"),
@@ -9,7 +10,7 @@ def test_first_three_books():
     ]
     assert task5.first_three_books() == expected
 
+# Should return correct ID for valid names
 def test_get_student_info_valid():
-    # Should return correct ID for valid names
     assert task5.get_student_info("John") == "101"
     assert task5.get_student_info("Jill") == "103"
