@@ -6,10 +6,9 @@ booklist = [
     ("The Way of Kings", "Brandon Sanderson"),
     ("The Terminal List", "Jack Carr")
 ]
-
-#A basic student database, including student names and their corresponding student IDs.
-
-studentlist: {
+# Create a dictionary that represents a basic student database, 
+# including student names and their corresponding student IDs
+studentlist = {
     "John": "101",
     "Joe": "102",
     "Jill": "103",
@@ -17,8 +16,7 @@ studentlist: {
 }
 
 def first_three_books():
-    return books[:3]
+    return booklist[:3]
 
-def get_student_info():
-    return student.get(name)
-    
+def get_student_info(name):
+    return studentlist.get(name)
