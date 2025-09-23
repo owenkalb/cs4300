@@ -1,48 +1,42 @@
-# If statement to see if number is positive or negative or zero
-# Validate input
-while True:
-    try:
-        num = int(input("Enter a number: "))
-        break
-    except ValueError:
-        print("Invalid input!")
-# Check if pos
-if num > 0:
-    print("The number is positive")
-# Check if zero
-elif num == 0:
-    print("The number is zero")
-else:
-# Check if neg
-    print("The number is negative")
+# Create an if statement to check if a given number is positive,
+# negative, or zero. Implement a for loop to print the first 10 prime numbers (you may need to
+# research how to calculate prime numbers). Create a while loop to find the sum of all numbers from
+# 1 to 100.
 
-# For loop to print first 10 prime numbers
+# Check if number is positive, negative, or zero
+def check_number(num):
+    if num > 0:
+        return "positive"
+    elif num == 0:
+        return "zero"
+    else:
+        return "negative"
+
+
+# Return first 10 prime numbers
 def is_prime(n):
     if n <= 1:
         return False
-    for i in range(2, int(n**0.5) + 1):
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
             return False
     return True
 
-print("\nThe first 10 prime numbers")
-counter = 0
-# Start with first prime number
-num = 2
-# loop for the first 10 prime numbers
-while counter < 10:
-    if is_prime(num):
-        print(num)
-        counter += 1
-    num += 1
+def first_10_primes():
+    primes = []
+    num = 2
+    while len(primes) < 10:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
 
 
-# While loop to find sum of all numbers from 1 to 100
-print("\nSum of all numbers from 1-100")
-x=1
-temp = 0
-while x<101:
-   temp = temp + x
-   x = x + 1
-# Print sum
-print(temp) 
+# Sum of numbers from 1 to 100
+def sum_1_to_100():
+    total = 0
+    x = 1
+    while x <= 100:
+        total += x
+        x += 1
+    return total
