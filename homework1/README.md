@@ -10,9 +10,9 @@ pytest test_task5.py
 pytest test_task6.py  
 pytest test_task7.py  
 
-All test pass and work, one thing that I had to do was run the following 2 cmds:
-export PYTHONPATH=$PYTHONPATH:$(pwd)/src
-pytest tests/test_task1.py
+All test pass and work, one thing that I had to do was run the following 2 cmds:  
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src  
+pytest tests/test_task1.py  
 
 I was also able to run them locally in VScode with no issues.
 
