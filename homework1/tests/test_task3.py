@@ -1,6 +1,6 @@
 # Task3 tests
 import pytest
-from task import check_number, first_10_primes, sum_1_to_100
+from task3 import check_number, first_10_primes, sum_1_to_100
 
 def test_check_number():
     assert check_number(1234) == "positive"
