@@ -1,5 +1,5 @@
 # task1
-from hello import say_hello
+from task1 import say_hello
 
 def test_say_hello(capsys):
     say_hello()
