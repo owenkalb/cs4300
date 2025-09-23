@@ -1,5 +1,5 @@
 import pytest
-from pytester import calculate_discount
+from task4 import calculate_discount
 
 def test_integer_inputs():
     assert calculate_discount(100, 20) == 80
