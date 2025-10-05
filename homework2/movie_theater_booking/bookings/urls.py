@@ -5,7 +5,8 @@ from .views import (
     SeatViewSet,
     BookingViewSet,
     movie_list_view,
-    book_seat_view
+    book_seat_view,
+    booking_history_view
 )
 
 router = DefaultRouter()
@@ -16,5 +17,6 @@ router.register(r'bookings', BookingViewSet)
 urlpatterns = [
     path('', movie_list_view, name='movie_list'),
     path('book/<int:movie_id>/', book_seat_view, name='book_seat'),
+    path('history/', booking_history_view, name='booking_history'),
     path('api/', include(router.urls)),
 ]

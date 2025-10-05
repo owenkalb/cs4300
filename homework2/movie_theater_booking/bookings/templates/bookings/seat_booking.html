@@ -1,12 +1,105 @@
+<!-- bookings/templates/bookings/seat_booking.html -->
+
 {% extends 'bookings/base.html' %}
 
 {% block title %}Book Seats{% endblock %}
 
 {% block content %}
+<style>
+  body {
+    background-color: #0b1e3f;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .screen {
+    background-color: #fdd835;
+    color: #0b1e3f;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .seat-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .seat {
+    width: 60px;
+    height: 60px;
+    background-color: #ff6f00;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .seat:hover {
+    background-color: #ffa726;
+    transform: scale(1.05);
+  }
+
+  .seat.booked {
+    background-color: #616161;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+</style>
+
 <h2>Book Seats for {{ movie.title }}</h2>
-<ul>
-  {% for seat in seats %}
-    <li>{{ seat.seat_number }} - {% if seat.is_booked %}Booked{% else %}Available{% endif %}</li>
-  {% endfor %}
-</ul>
+<div class="screen">SCREEN</div>
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="seat-row">
+    {% for seat in seats %}
+      {% if seat.seat_number|slice:":1" == "A" %}
+        <label>
+          <input type="radio" name="seat" value="{{ seat.id }}" {% if seat.is_booked %}disabled{% endif %}>
+          <div class="seat {% if seat.is_booked %}booked{% endif %}">{{ seat.seat_number }}</div>
+        </label>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="seat-row">
+    {% for seat in seats %}
+      {% if seat.seat_number|slice:":1" == "B" %}
+        <label>
+          <input type="radio" name="seat" value="{{ seat.id }}" {% if seat.is_booked %}disabled{% endif %}>
+          <div class="seat {% if seat.is_booked %}booked{% endif %}">{{ seat.seat_number }}</div>
+        </label>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="seat-row">
+    {% for seat in seats %}
+      {% if seat.seat_number|slice:":1" == "C" %}
+        <label>
+          <input type="radio" name="seat" value="{{ seat.id }}" {% if seat.is_booked %}disabled{% endif %}>
+          <div class="seat {% if seat.is_booked %}booked{% endif %}">{{ seat.seat_number }}</div>
+        </label>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button type="submit" class="book-btn">Confirm Booking</button>
+</form>
+
 {% endblock %}
