@@ -50,6 +50,24 @@
     color: #cfd8dc;
     margin-top: 40px;
   }
+
+  .back-btn {
+    display: block;
+    margin: 40px auto 0;
+    background-color: #ffb300;
+    color: #0b1e3f;
+    font-weight: bold;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #ffd54f;
+  }
 </style>
 
 <div class="header">
@@ -78,4 +96,6 @@
 {% else %}
   <div class="no-bookings">No bookings yet.</div>
 {% endif %}
+
+<a href="/proxy/3000/" class="back-btn">Back to Home</a>
 {% endblock %}

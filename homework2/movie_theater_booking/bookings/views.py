@@ -39,27 +39,23 @@ def booking_history_view(request):
 def book_seat_view(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     seats = Seat.objects.filter(movie=movie)
-    form = BookingForm()
 
     if request.method == 'POST':
-        form = BookingForm(request.POST)
-        if form.is_valid():
-            seat = form.cleaned_data['seat']
-            if seat.is_booked:
-                form.add_error('seat', 'This seat is already booked.')
-            else:
+        selected_ids = request.POST.getlist('seats')
+        for seat_id in selected_ids:
+            seat = Seat.objects.get(id=seat_id)
+            if not seat.is_booked:
                 Booking.objects.create(
                     movie=movie,
                     seat=seat,
-                    booking_date=timezone.now() 
+                    booking_date=timezone.now()
                 )
                 seat.is_booked = True
                 seat.save()
-                return redirect('booking_history')
+        return redirect('booking_history')
 
     return render(request, 'bookings/seat_booking.html', {
         'movie': movie,
-        'seats': seats,
-        'form': form
+        'seats': seats
     })
 
