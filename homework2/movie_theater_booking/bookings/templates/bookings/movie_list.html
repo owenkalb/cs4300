@@ -10,8 +10,7 @@
         <h5>{{ movie.title }}</h5>
         <p>{{ movie.description }}</p>
         <!-- Link to seat booking page -->
-        <a href="{% url 'book_seat' movie.id %}" class="btn btn-primary">Book Now</a>
-
+        <a href="/proxy/3000{% url 'book_seat' movie.id %}" class="btn btn-primary">Book Now</a>
     </li>
     {% endfor %}
 </ul>

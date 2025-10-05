@@ -28,3 +28,4 @@ def book_seat_view(request, movie_id):
         'movie': movie,
         'seats': seats
     })
+
