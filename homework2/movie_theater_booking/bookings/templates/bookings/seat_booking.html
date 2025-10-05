@@ -52,8 +52,9 @@
     opacity: 0.6;
   }
 
-  .seat-label {
-    display: none;
+  .seat.selected {
+    outline: 3px solid black;
+    box-shadow: 0 0 10px #fff;
   }
 
   .confirm-btn {
@@ -77,17 +78,19 @@
 <h2 style="text-align:center;">Book Seats for {{ movie.title }}</h2>
 <div class="screen">SCREEN</div>
 
-<form method="post">
+<form method="post" id="booking-form">
   {% csrf_token %}
+  <input type="hidden" name="seats" id="selected-seats">
 
   {% for row in "ABC" %}
     <div class="seat-row">
       {% for seat in seats %}
         {% if seat.seat_number|slice:":1" == row %}
-          <label>
-            <input type="checkbox" name="seats" value="{{ seat.id }}" {% if seat.is_booked %}disabled{% endif %}>
-            <div class="seat {% if seat.is_booked %}booked{% endif %}">{{ seat.seat_number }}</div>
-          </label>
+          <div class="seat {% if seat.is_booked %}booked{% endif %}" 
+               data-seat-id="{{ seat.id }}" 
+               data-seat-number="{{ seat.seat_number }}">
+            {{ seat.seat_number }}
+          </div>
         {% endif %}
       {% endfor %}
     </div>
@@ -95,4 +98,24 @@
 
   <button type="submit" class="confirm-btn">Confirm Booking</button>
 </form>
+
+<script>
+  const selected = new Set();
+  const seatElements = document.querySelectorAll('.seat:not(.booked)');
+  const hiddenInput = document.getElementById('selected-seats');
+
+  seatElements.forEach(seat => {
+    seat.addEventListener('click', () => {
+      const seatId = seat.dataset.seatId;
+      if (selected.has(seatId)) {
+        selected.delete(seatId);
+        seat.classList.remove('selected');
+      } else {
+        selected.add(seatId);
+        seat.classList.add('selected');
+      }
+      hiddenInput.value = Array.from(selected).join(',');
+    });
+  });
+</script>
 {% endblock %}

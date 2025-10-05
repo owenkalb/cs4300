@@ -68,6 +68,14 @@
   .back-btn:hover {
     background-color: #ffd54f;
   }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #e63946;
+    font-weight: bold;
+    cursor: pointer;
+  }
 </style>
 
 <div class="header">
@@ -81,14 +89,18 @@
         <th>Movie</th>
         <th>Seat</th>
         <th>Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       {% for booking in bookings %}
-      <tr>
+      <tr data-booking-id="{{ booking.id }}">
         <td>{{ booking.movie.title }}</td>
         <td>{{ booking.seat.seat_number }}</td>
         <td>{{ booking.booking_date|date:"M d, Y H:i" }}</td>
+        <td>
+          <button class="delete-btn">Delete</button>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -98,4 +110,36 @@
 {% endif %}
 
 <a href="/proxy/3000/" class="back-btn">Back to Home</a>
+
+<script>
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+  document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const row = button.closest('tr');
+      const bookingId = row.dataset.bookingId;
+
+      fetch(`/delete-booking/${bookingId}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken,
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          row.remove();
+        } else {
+          alert('Delete failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong.');
+      });
+    });
+  });
+</script>
+
 {% endblock %}
