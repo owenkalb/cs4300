@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-z_!ts0$imai&o#)7j1@)ew0hk!&u6!h*jv&8&#sv4wh-3*r71)
 CSRF_TRUSTED_ORIGINS = [
     'https://editor-owenkalb-20.devedu.io',
 ]
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
