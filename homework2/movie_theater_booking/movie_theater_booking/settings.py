@@ -22,6 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-z_!ts0$imai&o#)7j1@)ew0hk!&u6!h*jv&8&#sv4wh-3*r71)'
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://editor-owenkalb-20.devedu.io',
+]
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
