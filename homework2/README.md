@@ -46,10 +46,8 @@ python3 manage.py runserver 0.0.0.0:3000
 - `movie_theater_booking/` — Django project root  
 - `bookings/` — Main app with models, views, templates  
 - `templates/bookings/` — HTML templates  
-- `static/` — Custom CSS and JS  
 - `db.sqlite3` — Default database file  
-- `requirements.txt` — Dependency list for deployment  
-- `render.yaml` — Optional Render config  
+
 
 ## Resources Used
 
