@@ -6,7 +6,6 @@ from .forms import BookingForm
 from django.utils import timezone
 from django.http import JsonResponse, HttpResponseNotAllowed
 
-
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
