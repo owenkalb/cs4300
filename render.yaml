@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: movie-theater-booking
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn movie_theater_booking.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: movie_theater_booking.settings

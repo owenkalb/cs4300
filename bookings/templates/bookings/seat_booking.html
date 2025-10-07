@@ -1,0 +1,121 @@
+{% extends 'bookings/base.html' %}
+
+{% block title %}Book Seats{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #0b1e3f;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .screen {
+    background-color: #fdd835;
+    color: #0b1e3f;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .seat-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .seat {
+    width: 60px;
+    height: 60px;
+    background-color: #ff6f00;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .seat:hover {
+    background-color: #ffa726;
+    transform: scale(1.05);
+  }
+
+  .seat.booked {
+    background-color: #616161;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .seat.selected {
+    outline: 3px solid black;
+    box-shadow: 0 0 10px #fff;
+  }
+
+  .confirm-btn {
+    display: block;
+    margin: 30px auto;
+    background-color: #ffb300;
+    color: #0b1e3f;
+    font-weight: bold;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .confirm-btn:hover {
+    background-color: #ffd54f;
+  }
+</style>
+
+<h2 style="text-align:center;">Book Seats for {{ movie.title }}</h2>
+<div class="screen">SCREEN</div>
+
+<form method="post" id="booking-form">
+  {% csrf_token %}
+  <input type="hidden" name="seats" id="selected-seats">
+
+  {% for row in "ABC" %}
+    <div class="seat-row">
+      {% for seat in seats %}
+        {% if seat.seat_number|slice:":1" == row %}
+          <div class="seat {% if seat.is_booked %}booked{% endif %}" 
+               data-seat-id="{{ seat.id }}" 
+               data-seat-number="{{ seat.seat_number }}">
+            {{ seat.seat_number }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <button type="submit" class="confirm-btn">Confirm Booking</button>
+</form>
+
+<script>
+  const selected = new Set();
+  const seatElements = document.querySelectorAll('.seat:not(.booked)');
+  const hiddenInput = document.getElementById('selected-seats');
+
+  seatElements.forEach(seat => {
+    seat.addEventListener('click', () => {
+      const seatId = seat.dataset.seatId;
+      if (selected.has(seatId)) {
+        selected.delete(seatId);
+        seat.classList.remove('selected');
+      } else {
+        selected.add(seatId);
+        seat.classList.add('selected');
+      }
+      hiddenInput.value = Array.from(selected).join(',');
+    });
+  });
+</script>
+{% endblock %}

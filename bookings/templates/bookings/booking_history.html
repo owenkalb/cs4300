@@ -1,0 +1,144 @@
+{% extends 'bookings/base.html' %}
+
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #0b1e3f;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .header {
+    border-bottom: 2px solid #e63946;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+  }
+
+  .header h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #192a44;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .history-table th,
+  .history-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #2c3e50;
+    color: #ffffff;
+  }
+
+  .history-table th {
+    background-color: #263859;
+    font-weight: bold;
+  }
+
+  .no-bookings {
+    text-align: center;
+    font-size: 18px;
+    color: #cfd8dc;
+    margin-top: 40px;
+  }
+
+  .back-btn {
+    display: block;
+    margin: 40px auto 0;
+    background-color: #ffb300;
+    color: #0b1e3f;
+    font-weight: bold;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #ffd54f;
+  }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #e63946;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+<div class="header">
+  <h2>Your Booking History</h2>
+</div>
+
+{% if bookings %}
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>Movie</th>
+        <th>Seat</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr data-booking-id="{{ booking.id }}">
+        <td>{{ booking.movie.title }}</td>
+        <td>{{ booking.seat.seat_number }}</td>
+        <td>{{ booking.booking_date|date:"M d, Y H:i" }}</td>
+        <td>
+          <button class="delete-btn">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="no-bookings">No bookings yet.</div>
+{% endif %}
+
+<a href="/proxy/3000/" class="back-btn">Back to Home</a>
+
+<script>
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+  document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const row = button.closest('tr');
+      const bookingId = row.dataset.bookingId;
+
+      fetch(`/delete-booking/${bookingId}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken,
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          row.remove();
+        } else {
+          alert('Delete failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong.');
+      });
+    });
+  });
+</script>
+{% endblock %}
