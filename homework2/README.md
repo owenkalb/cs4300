@@ -55,7 +55,7 @@ python3 manage.py runserver 0.0.0.0:3000
 - Django REST Framework  
 - Bootstrap  
 - Testing in Django  
-- Copilot to Refactor views and templates and to Improve UI/UX
+- Copilot to Refactor views and templates and to improve UI/UX and debug issues with functions
 
 
 
